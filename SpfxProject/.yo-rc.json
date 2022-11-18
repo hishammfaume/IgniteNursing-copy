@@ -1,0 +1,17 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.15.2",
+    "libraryName": "ignite-nursing",
+    "libraryId": "80ea3b5a-216f-4338-acab-d55755930135",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "IgniteNursing",
+    "solutionShortDescription": "IgniteNursing description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "extension",
+    "extensionType": "ApplicationCustomizer"
+  }
+}

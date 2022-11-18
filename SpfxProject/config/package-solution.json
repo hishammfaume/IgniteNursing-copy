@@ -1,0 +1,64 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+    "solution": {
+        "name": "ignite-nursing-client-side-solution",
+        "id": "80ea3b5a-216f-4338-acab-d55755930135",
+        "version": "1.0.0.0",
+        "includeClientSideAssets": true,
+        "skipFeatureDeployment": true,
+        "webApiPermissionRequests": [
+            {
+                "resource": "Microsoft Graph",
+                "scope": "User.ReadBasic.All"
+            },
+            {
+                "resource": "Microsoft Graph",
+                "scope": "GroupMember.Read.All"
+            },
+            {
+                "resource": "Microsoft Graph",
+                "scope": "Directory.Read.All"
+            },
+            {
+                "resource": "Microsoft Graph",
+                "scope": "Directory.ReadWrite.All"
+            }
+        ],
+        "isDomainIsolated": false,
+        "developer": {
+            "name": "",
+            "websiteUrl": "",
+            "privacyUrl": "",
+            "termsOfUseUrl": "",
+            "mpnId": "Undefined-1.15.2"
+        },
+        "metadata": {
+            "shortDescription": {
+                "default": "IgniteNursing description"
+            },
+            "longDescription": {
+                "default": "IgniteNursing description"
+            },
+            "screenshotPaths": [],
+            "videoUrl": "",
+            "categories": []
+        },
+        "features": [
+            {
+                "title": "Application Extension - Deployment of custom action",
+                "description": "Deploys a custom action with ClientSideComponentId association",
+                "id": "438ca37d-3bda-4908-8e5a-eafc08378c84",
+                "version": "1.0.0.0",
+                "assets": {
+                    "elementManifests": [
+                        "elements.xml",
+                        "ClientSideInstance.xml"
+                    ]
+                }
+            }
+        ]
+    },
+    "paths": {
+        "zippedPackage": "solution/ignite-nursing.sppkg"
+    }
+}

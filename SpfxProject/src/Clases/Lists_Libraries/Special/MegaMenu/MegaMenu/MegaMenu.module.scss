@@ -1,0 +1,64 @@
+.MegaMenuBar {
+    .LogoText {
+        font-size: 35px;
+        color: #e2f9fe;
+        //font-weight: 600;
+        padding-left: 15px;
+    }
+    .MainIcon {
+        color: #e2f9fe;
+        padding: 30px;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+    background-color: #1999dd;
+    .Elements {
+        display: flex;
+
+        justify-content: space-between;
+        flex-direction: row;
+        min-height: 300px;
+        padding-left: 15px;
+        padding-right: 15px;
+
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-top: 1px solid #2ca4e5;
+        .Column {
+            .HeaderText {
+                color: #e2f9fe;
+                font-weight: 600;
+                font-size: 24px;
+                padding-bottom: 10px;
+            }
+            .LinkText {
+                color: #e2f9fe;
+                font-size: 18px;
+                padding-bottom: 5px;
+                > a,
+                a:visited,
+                a:hover,
+                a:active {
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }
+        }
+        .Icon {
+            color: #e2f9fe;
+
+            &:hover {
+                background-color: transparent !important;
+            }
+        }
+        .Icon.is-disabled {
+            background-color: transparent !important;
+        }
+        -moz-transition: height 0.5s;
+        -ms-transition: height 0.5s;
+        -o-transition: height 0.5s;
+        -webkit-transition: height 0.5s;
+        transition: height 0.5s;
+    }
+}
