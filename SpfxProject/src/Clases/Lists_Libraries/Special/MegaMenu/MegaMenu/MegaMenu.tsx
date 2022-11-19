@@ -122,7 +122,7 @@ export default function MegaMenu(props: MegaMenuProps) {
     const FilterNodeGroups = (MN: MegaMenuNode) => {
         if (MN.Group != null && MN.Group.length > 0) {
             let GroupsImInsideOf = MN.Group.filter((G) =>
-                SPGroups.current.CheckGroupById(G.ID)
+                SPGroups.current.CheckGroup(G.Title)
             );
 
             if (GroupsImInsideOf.length <= 0) return false;
@@ -341,9 +341,13 @@ export default function MegaMenu(props: MegaMenuProps) {
 
                     {Open && (
                         <div className={MegaMenuStyles.Elements}>
-                            {MegaMenuStructure.MegaMenuNodes.sort((a, b) => {
-                                return a.Position > b.Position ? 1 : -1;
-                            }).map((MNN) => _RenderMegaMenuNode(MNN))}
+                            {MegaMenuStructure.MegaMenuNodes.filter(
+                                FilterNodeGroups
+                            )
+                                .sort((a, b) => {
+                                    return a.Position > b.Position ? 1 : -1;
+                                })
+                                .map((MNN) => _RenderMegaMenuNode(MNN))}
                         </div>
                     )}
                 </Stack>

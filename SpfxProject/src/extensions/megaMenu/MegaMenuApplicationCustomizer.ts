@@ -35,7 +35,6 @@ export default class MegaMenuApplicationCustomizer extends BaseApplicationCustom
 
     private _topPlaceholder: PlaceholderContent | undefined;
     public onInit(): Promise<void> {
-        debugger;
         super
             .onInit()
             .then((_) => {
