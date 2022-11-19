@@ -30,7 +30,9 @@ export default class GroupsSP {
     public IsLoaded: Promise<boolean>;
     public LoadingError: Error;
     public Web: IWeb;
-    static myInstance: any = null;
+    static myInstance: GroupsSP = null;
+
+    public CurrentLoggedUserId: number;
 
     constructor(
         web: IWeb,
@@ -63,6 +65,10 @@ export default class GroupsSP {
                 .then((G) => {
                     this.CurrentUserGroups = G;
                 });
+
+            let CurrentLoggedUserResult = BatchedWeb.currentUser().then(
+                (U) => (this.CurrentLoggedUserId = U.Id)
+            );
 
             await execute();
 

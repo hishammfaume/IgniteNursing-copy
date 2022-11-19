@@ -1,18 +1,18 @@
 .MegaMenuBar {
     .LogoText {
         font-size: 35px;
-        color: #e2f9fe;
+        color: #001439;
         //font-weight: 600;
         padding-left: 15px;
     }
     .MainIcon {
-        color: #e2f9fe;
+        color: #001439;
         padding: 30px;
         &:hover {
             background-color: transparent;
         }
     }
-    background-color: #1999dd;
+    background-color: #d9d9d9;
     .Elements {
         display: flex;
 
@@ -24,16 +24,22 @@
 
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top: 1px solid #2ca4e5;
+        border-top: 1px solid #f68633;
         .Column {
+            > div {
+                overflow: hidden;
+                max-width: 600px;
+            }
             .HeaderText {
-                color: #e2f9fe;
+                color: #001439;
                 font-weight: 600;
                 font-size: 24px;
                 padding-bottom: 10px;
+                overflow: hidden;
             }
             .LinkText {
-                color: #e2f9fe;
+                overflow: hidden;
+                color: #001439;
                 font-size: 18px;
                 padding-bottom: 5px;
                 > a,
@@ -46,7 +52,7 @@
             }
         }
         .Icon {
-            color: #e2f9fe;
+            color: #001439;
 
             &:hover {
                 background-color: transparent !important;

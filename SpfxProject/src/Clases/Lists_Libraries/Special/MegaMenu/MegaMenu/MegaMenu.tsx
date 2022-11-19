@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 import {
     CommandBar,
     FocusTrapZone,
@@ -25,9 +26,10 @@ import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 import MyLinksList from "../../../SavedSearchQueries/MyLinksList";
 import { MyLinksItem } from "../../../SavedSearchQueries/MyLinksItem";
 import { Item } from "@pnp/sp/items";
-
+import { IWeb } from "@pnp/sp/webs";
+const Logo = require("../../../../../Logo/INLogo.png");
 export interface MegaMenuProps {
-    SP: SPFI;
+    Web: IWeb;
     Context: WebPartContext | ApplicationCustomizerContext;
 }
 
@@ -82,16 +84,13 @@ export default function MegaMenu(props: MegaMenuProps) {
 
     async function initialLoad() {
         try {
-            SPGroups.current = GroupsSP.getInstance(
-                props.SP.web,
-                props.Context
-            );
+            SPGroups.current = GroupsSP.getInstance(props.Web, props.Context);
 
             MegaMenuListRef.current = new MegaMenuList(
-                props.SP.web,
+                props.Web,
                 props.Context
             );
-            MyLinksL.current = new MyLinksList(props.SP.web, props.Context);
+            MyLinksL.current = new MyLinksList(props.Web, props.Context);
 
             await SPGroups.current.IsLoaded;
             if (SPGroups.current.LoadingError != null)
@@ -328,9 +327,16 @@ export default function MegaMenu(props: MegaMenuProps) {
                             className={MegaMenuStyles.MainIcon}
                             styles={{ icon: { fontSize: 30 } }}
                         ></IconButton>
-                        <span className={MegaMenuStyles.LogoText}>
-                            {"Cloud Academy"}
-                        </span>
+                        <div style={{ height: 50 }}>
+                            <a
+                                href={
+                                    props.Context.pageContext.legacyPageContext
+                                        .portalUrl
+                                }
+                            >
+                                <img style={{ height: "100%" }} src={Logo} />
+                            </a>
+                        </div>
                     </Stack>
 
                     {Open && (

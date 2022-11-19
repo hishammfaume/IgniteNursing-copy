@@ -1,9 +1,9 @@
 {
     "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
     "solution": {
-        "name": "ignite-nursing-client-side-solution",
+        "name": "Ignite_Nursing_MegaMenu",
         "id": "80ea3b5a-216f-4338-acab-d55755930135",
-        "version": "1.0.0.0",
+        "version": "1.0.0.5",
         "includeClientSideAssets": true,
         "skipFeatureDeployment": true,
         "webApiPermissionRequests": [
@@ -26,7 +26,7 @@
         ],
         "isDomainIsolated": false,
         "developer": {
-            "name": "",
+            "name": "Manuel Angel Covelo Vazquez",
             "websiteUrl": "",
             "privacyUrl": "",
             "termsOfUseUrl": "",
@@ -34,10 +34,10 @@
         },
         "metadata": {
             "shortDescription": {
-                "default": "IgniteNursing description"
+                "default": "Ignite_Nursing_MegaMenu"
             },
             "longDescription": {
-                "default": "IgniteNursing description"
+                "default": "Ignite_Nursing_MegaMenu"
             },
             "screenshotPaths": [],
             "videoUrl": "",
@@ -45,8 +45,8 @@
         },
         "features": [
             {
-                "title": "Application Extension - Deployment of custom action",
-                "description": "Deploys a custom action with ClientSideComponentId association",
+                "title": "MegaMenu for Ignite Nursing",
+                "description": "MegaMenu for Ignite Nursing",
                 "id": "438ca37d-3bda-4908-8e5a-eafc08378c84",
                 "version": "1.0.0.0",
                 "assets": {

@@ -8,6 +8,7 @@ import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import LinkForm from "./Components/LinkForm";
+import GroupsSP from "../../Tools/Groups/Groups";
 
 const SelectAllFields: string[] = ["*", "User/Title", "User/ID", "User/EMail"];
 const ExpandAllFields: string[] = ["User"];
@@ -144,10 +145,9 @@ export default class MyLinksList extends BaseList {
                     .top(5000)
                     .expand(...this.ExpandAllFields)
                     .select(...this.SelectAllFields)
-                    /*.filter(
-                        `User/Name eq '${this.Context.pageContext.legacyPageContext.systemUserKey}'`
-                    )*/
-                    ()
+                    .filter(
+                        `UserId eq '${GroupsSP.myInstance.CurrentLoggedUserId}'`
+                    )()
                     .then((Data: IItem[]) => {
                         let Queries = Data.map((I) => {
                             return new MyLinksItem(I, this);

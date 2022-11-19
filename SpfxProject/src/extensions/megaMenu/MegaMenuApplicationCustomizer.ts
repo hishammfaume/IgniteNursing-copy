@@ -14,6 +14,8 @@ import MegaMenu, {
 } from "../../Clases/Lists_Libraries/Special/MegaMenu/MegaMenu/MegaMenu";
 import * as ReactDOM from "react-dom";
 import { spfi, SPFI, SPFx } from "@pnp/sp";
+import { Web } from "@pnp/sp/webs";
+import { HubSite } from "../../Clases/Tools/Groups/utils";
 
 const LOG_SOURCE: string = "MegaMenuApplicationCustomizer";
 
@@ -33,6 +35,7 @@ export default class MegaMenuApplicationCustomizer extends BaseApplicationCustom
 
     private _topPlaceholder: PlaceholderContent | undefined;
     public onInit(): Promise<void> {
+        debugger;
         super
             .onInit()
             .then((_) => {
@@ -44,19 +47,14 @@ export default class MegaMenuApplicationCustomizer extends BaseApplicationCustom
                     this,
                     this._renderPlaceHolders
                 );
+            })
+            .catch((E) => {
+                throw E;
             });
         return Promise.resolve();
     }
 
     private _renderPlaceHolders(): void {
-        console.log("HelloWorldApplicationCustomizer._renderPlaceHolders()");
-        console.log(
-            "Available placeholders: ",
-            this.context.placeholderProvider.placeholderNames
-                .map((name) => PlaceholderName[name])
-                .join(", ")
-        );
-
         // Handling the top placeholder
         if (!this._topPlaceholder) {
             this._topPlaceholder =
@@ -71,10 +69,15 @@ export default class MegaMenuApplicationCustomizer extends BaseApplicationCustom
                 return;
             }
             if (this.properties) {
+                let MainWeb = Web([
+                    this.SP.web,
+                    this.context.pageContext.legacyPageContext.portalUrl +
+                        HubSite,
+                ]);
                 // Add refrence of react component to this file.
                 const element: React.ReactElement<MegaMenuProps> =
                     React.createElement(MegaMenu, {
-                        SP: this.SP,
+                        Web: MainWeb,
                         Context: this.context,
                     });
                 ReactDOM.render(element, this._topPlaceholder.domElement);

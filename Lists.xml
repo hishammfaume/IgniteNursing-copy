@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-1EA91B1DD3114A77B88F157F3CFF2F16">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-1EA91B1DD3114A77B88F157F3CFF2F16" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
+      <pnp:Lists>
+        <pnp:ListInstance Title="MegaMenu" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/MegaMenu" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/MegaMenu/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/MegaMenu/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/MegaMenu/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:PropertyBagEntries>
+            <pnp:PropertyBagEntry Key="wte_Source" Value="https://8vbkqy.sharepoint.com/sites/Development/Lists/MegaMenu/AllItems.aspx" Overwrite="false" />
+          </pnp:PropertyBagEntries>
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{9C82D111-1BF3-4300-B0D9-551D51513104}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/MegaMenu/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="ParentNode" />
+                <FieldRef Name="MenuHierarchyOrder" />
+                <FieldRef Name="Group" />
+                <FieldRef Name="Link" />
+                <FieldRef Name="CustomFunction" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Parent Node" Format="Dropdown" Indexed="FALSE" Name="ParentNode" ShowField="Title" Title="Parent Node" Type="Lookup" ID="{e742fc17-1daf-4225-868c-4ed6ccf5cee1}" StaticName="ParentNode" List="{listid:MegaMenu}" ColName="int1" RowOrdinal="0" SourceID="{{listid:MegaMenu}}" Version="2" WebId="{siteid}" />
+            <Field ClientSideComponentId="00000000-0000-0000-0000-000000000000" DisplayName="Group" Format="Dropdown" List="UserInfo" Mult="TRUE" Name="Group" ShowField="ImnName" Title="Group" Type="UserMulti" UserSelectionMode="1" UserSelectionScope="0" ID="{897d39f4-1f78-4ec9-979f-c16e2a27de92}" StaticName="Group" ColName="int2" RowOrdinal="0" SourceID="{{listid:MegaMenu}}" />
+            <Field DisplayName="Link" Format="Dropdown" IsModern="TRUE" MaxLength="255" Name="Link" Title="Link" Type="Text" ID="{1b955aba-0eb5-47f6-8450-0cbebc55375f}" StaticName="Link" ColName="nvarchar5" RowOrdinal="0" SourceID="{{listid:MegaMenu}}" />
+            <Field CommaSeparator="TRUE" CustomUnitOnRight="TRUE" Decimals="0" DisplayName="MenuHierarchyOrder" Format="Dropdown" IsModern="TRUE" Name="MenuHierarchyOrder" Percentage="FALSE" Title="MenuHierarchyOrder" Type="Number" Unit="None" ID="{53f30ddf-6f21-424d-bf4e-e7297f359d5b}" StaticName="MenuHierarchyOrder" ColName="float1" RowOrdinal="0" SourceID="{{listid:MegaMenu}}" />
+            <Field ClientSideComponentId="00000000-0000-0000-0000-000000000000" CustomFormatter="{&quot;elmType&quot;:&quot;div&quot;,&quot;style&quot;:{&quot;flex-wrap&quot;:&quot;wrap&quot;,&quot;display&quot;:&quot;flex&quot;},&quot;children&quot;:[{&quot;elmType&quot;:&quot;div&quot;,&quot;style&quot;:{&quot;box-sizing&quot;:&quot;border-box&quot;,&quot;padding&quot;:&quot;4px 8px 5px 8px&quot;,&quot;overflow&quot;:&quot;hidden&quot;,&quot;text-overflow&quot;:&quot;ellipsis&quot;,&quot;display&quot;:&quot;flex&quot;,&quot;border-radius&quot;:&quot;16px&quot;,&quot;height&quot;:&quot;24px&quot;,&quot;align-items&quot;:&quot;center&quot;,&quot;white-space&quot;:&quot;nowrap&quot;,&quot;margin&quot;:&quot;4px 4px 4px 4px&quot;},&quot;attributes&quot;:{&quot;class&quot;:{&quot;operator&quot;:&quot;:&quot;,&quot;operands&quot;:[{&quot;operator&quot;:&quot;==&quot;,&quot;operands&quot;:[&quot;[$CustomFunction]&quot;,&quot;MyLinks&quot;]},&quot;sp-css-backgroundColor-BgCornflowerBlue sp-css-color-CornflowerBlueFont&quot;,{&quot;operator&quot;:&quot;:&quot;,&quot;operands&quot;:[{&quot;operator&quot;:&quot;==&quot;,&quot;operands&quot;:[&quot;[$CustomFunction]&quot;,&quot;&quot;]},&quot;&quot;,&quot;sp-field-borderAllRegular sp-field-borderAllSolid sp-css-borderColor-neutralSecondary&quot;]}]}},&quot;txtContent&quot;:&quot;[$CustomFunction]&quot;}],&quot;templateId&quot;:&quot;BgColorChoicePill&quot;}" DisplayName="CustomFunction" FillInChoice="FALSE" Format="Dropdown" Name="CustomFunction" Title="CustomFunction" Type="Choice" ID="{3c4df9a1-42f7-477e-adb4-2da64b1d7b36}" Version="2" StaticName="CustomFunction" SourceID="{{listid:MegaMenu}}" ColName="nvarchar4" RowOrdinal="0">
+              <CHOICES>
+                <CHOICE>MyLinks</CHOICE>
+              </CHOICES>
+            </Field>
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://northeurope1-0.pushnp.svc.ms/notifications?token=4ecbcb8f-02b4-47ee-82d2-12f0f1528ea4" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="MyLinks" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/MyLinks" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/MyLinks/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/MyLinks/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/MyLinks/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{1092F294-AD04-4041-BA47-0FE2BAF64C85}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/MyLinks/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="User" />
+                <FieldRef Name="Link" />
+                <FieldRef Name="LinkOrder" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="User" Format="Dropdown" IsModern="TRUE" List="UserInfo" Name="User" Title="User" Type="User" UserSelectionMode="0" UserSelectionScope="0" ID="{99d6b2ba-69be-4a36-8e93-c1bb3bbc9793}" SourceID="{{listid:MyLinks}}" StaticName="User" ColName="int1" RowOrdinal="0" />
+            <Field DisplayName="Link" Format="Dropdown" IsModern="TRUE" MaxLength="255" Name="Link" Title="Link" Type="Text" ID="{ef74e51f-4f31-468f-8f70-9679c911eae6}" SourceID="{{listid:MyLinks}}" StaticName="Link" ColName="nvarchar4" RowOrdinal="0" />
+            <Field CommaSeparator="TRUE" CustomUnitOnRight="TRUE" Decimals="0" DisplayName="LinkOrder" Format="Dropdown" IsModern="TRUE" Name="LinkOrder" Percentage="FALSE" Title="LinkOrder" Type="Number" Unit="None" ID="{0aff988d-015c-4283-a3eb-65659b2c622c}" SourceID="{{listid:MyLinks}}" StaticName="LinkOrder" ColName="float1" RowOrdinal="0" />
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://northeurope1-0.pushnp.svc.ms/notifications?token=69e05324-b5b1-49ee-99f1-c3a58b979db3" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
