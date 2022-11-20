@@ -136,7 +136,7 @@ export default class BaseItem {
             ? Default != null
                 ? Default
                 : 0
-            : parseInt(Field);
+            : parseFloat(Field);
     }
 
     /**
@@ -205,9 +205,9 @@ export default class BaseItem {
      */
 
     public async HandleItemUpdateException(ex: Error) {
-        var e: HttpRequestError = ex as HttpRequestError;
+        let e: HttpRequestError = ex as HttpRequestError;
         if (e.isHttpRequestError) {
-            var msg = "";
+            let msg = "";
             if (e.status == 412) {
                 e.message =
                     `Looks like the item was already edited by someone else` +
@@ -220,7 +220,7 @@ export default class BaseItem {
                 throw new Error(e.message);
             }
         } else {
-            throw new Error(`Error while updating the item: ${msg}`);
+            throw new Error(`Error while updating the item: ${""}`);
         }
     }
 
@@ -243,7 +243,7 @@ export default class BaseItem {
             if (!popupClosed) return false;
         }
 
-        var List = this.List.LoadList(BatchedWeb);
+        let List = this.List.LoadList(BatchedWeb);
         List.items
             .getById(this.ID)
             .update({}, this.ListItem["odata.etag"])
@@ -260,7 +260,7 @@ export default class BaseItem {
      */
 
     public async Refresh() {
-        var Item = await this.List.LoadByID(this.ID);
+        let Item = await this.List.LoadByID(this.ID);
 
         return Item;
     }

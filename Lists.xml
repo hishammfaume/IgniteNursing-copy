@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
   <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-1EA91B1DD3114A77B88F157F3CFF2F16">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-1EA91B1DD3114A77B88F157F3CFF2F16" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-E28D66BDF18249308C74354AEC8556E8">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-E28D66BDF18249308C74354AEC8556E8" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
       <pnp:Lists>
         <pnp:ListInstance Title="MegaMenu" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/MegaMenu" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/MegaMenu/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/MegaMenu/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/MegaMenu/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
           <pnp:PropertyBagEntries>
@@ -41,6 +41,35 @@
           </pnp:Fields>
           <pnp:Webhooks>
             <pnp:Webhook ServerNotificationUrl="https://northeurope1-0.pushnp.svc.ms/notifications?token=4ecbcb8f-02b4-47ee-82d2-12f0f1528ea4" ExpiresInDays="1" />
+          </pnp:Webhooks>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="MegaMenuParameters" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/MegaMenuParameters" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/MegaMenuParameters/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/MegaMenuParameters/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/MegaMenuParameters/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{14713F6C-D294-43DF-96F0-32D2B951F9F1}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/MegaMenuParameters/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="Key" />
+                <FieldRef Name="Value" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field CustomFormatter="{&quot;elmType&quot;:&quot;div&quot;,&quot;style&quot;:{&quot;flex-wrap&quot;:&quot;wrap&quot;,&quot;display&quot;:&quot;flex&quot;},&quot;children&quot;:[{&quot;elmType&quot;:&quot;div&quot;,&quot;style&quot;:{&quot;box-sizing&quot;:&quot;border-box&quot;,&quot;padding&quot;:&quot;4px 8px 5px 8px&quot;,&quot;overflow&quot;:&quot;hidden&quot;,&quot;text-overflow&quot;:&quot;ellipsis&quot;,&quot;display&quot;:&quot;flex&quot;,&quot;border-radius&quot;:&quot;16px&quot;,&quot;height&quot;:&quot;24px&quot;,&quot;align-items&quot;:&quot;center&quot;,&quot;white-space&quot;:&quot;nowrap&quot;,&quot;margin&quot;:&quot;4px 4px 4px 4px&quot;},&quot;attributes&quot;:{&quot;class&quot;:{&quot;operator&quot;:&quot;:&quot;,&quot;operands&quot;:[{&quot;operator&quot;:&quot;==&quot;,&quot;operands&quot;:[&quot;@currentField&quot;,&quot;TickerMessage&quot;]},&quot;sp-css-backgroundColor-BgCornflowerBlue sp-field-fontSizeSmall sp-css-color-CornflowerBlueFont&quot;,{&quot;operator&quot;:&quot;:&quot;,&quot;operands&quot;:[{&quot;operator&quot;:&quot;==&quot;,&quot;operands&quot;:[&quot;@currentField&quot;,&quot;&quot;]},&quot;&quot;,&quot;sp-field-borderAllRegular sp-field-borderAllSolid sp-css-borderColor-neutralSecondary&quot;]}]}},&quot;txtContent&quot;:&quot;@currentField&quot;}],&quot;templateId&quot;:&quot;BgColorChoicePill&quot;}" DisplayName="Key" FillInChoice="FALSE" Format="Dropdown" IsModern="TRUE" Name="Key" Title="Key" Type="Choice" ID="{26fd4a34-35bd-4712-8d29-9571ad0f4650}" SourceID="{{listid:MegaMenuParameters}}" StaticName="Key" ColName="nvarchar4" RowOrdinal="0">
+              <CHOICES>
+                <CHOICE>TickerMessage</CHOICE>
+              </CHOICES>
+            </Field>
+            <Field AppendOnly="FALSE" DisplayName="Value" Format="Dropdown" IsModern="TRUE" IsolateStyles="FALSE" Name="Value" RichText="FALSE" RichTextMode="Compatible" Title="Value" Type="Note" ID="{835a869a-fc21-4599-8ed6-a0f64132ae4d}" SourceID="{{listid:MegaMenuParameters}}" StaticName="Value" ColName="ntext2" RowOrdinal="0" />
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://northeurope1-0.pushnp.svc.ms/notifications?token=3f217cc1-6d19-458f-b81e-7d50f22785c7" ExpiresInDays="1" />
           </pnp:Webhooks>
         </pnp:ListInstance>
         <pnp:ListInstance Title="MyLinks" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/MyLinks" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/MyLinks/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/MyLinks/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/MyLinks/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">

@@ -68,3 +68,25 @@
         transition: height 0.5s;
     }
 }
+
+.TickerBar {
+    background-color: #383434;
+    color: #d9d9d9 !important;
+    height: 50px;
+    font-size: 18px;
+    margin-top: 0px !important;
+    .TickerBarHeader {
+        color: #d9d9d9;
+        white-space: nowrap;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    :global(.Marquee) {
+        display: block;
+        overflow-x: hidden;
+        :global(.MarqueeContent) {
+            color: #d9d9d9;
+            white-space: nowrap;
+        }
+    }
+}

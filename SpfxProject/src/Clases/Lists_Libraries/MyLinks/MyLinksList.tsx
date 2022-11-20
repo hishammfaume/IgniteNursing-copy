@@ -138,7 +138,7 @@ export default class MyLinksList extends BaseList {
      */
     public async GetMyQueries(BatchedWeb?: IWeb) {
         let List = super.LoadList(BatchedWeb);
-        console.log(this.Context.pageContext.legacyPageContext);
+
         let Items = new Promise(
             (resolve: (IItem: MyLinksItem[]) => void, reject) => {
                 List.items

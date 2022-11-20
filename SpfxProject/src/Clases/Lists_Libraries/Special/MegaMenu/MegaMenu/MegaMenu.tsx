@@ -1,4 +1,4 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import {
     CommandBar,
     FocusTrapZone,
@@ -23,11 +23,15 @@ import { IFramePanel } from "@pnp/spfx-controls-react";
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
-import MyLinksList from "../../../SavedSearchQueries/MyLinksList";
-import { MyLinksItem } from "../../../SavedSearchQueries/MyLinksItem";
+import MyLinksList from "../../../MyLinks/MyLinksList";
+import { MyLinksItem } from "../../../MyLinks/MyLinksItem";
 import { Item } from "@pnp/sp/items";
 import { IWeb } from "@pnp/sp/webs";
+import MegaMenuParametersList from "../../../MegaMenuParameters/MegaMenuParametersList";
+import { MegaMenuParametersItem } from "../../../MegaMenuParameters/MegaMenuParametersItem";
+import Marquee from "react-smooth-marquee";
 const Logo = require("../../../../../Logo/INLogo.png");
+
 export interface MegaMenuProps {
     Web: IWeb;
     Context: WebPartContext | ApplicationCustomizerContext;
@@ -47,12 +51,14 @@ export default function MegaMenu(props: MegaMenuProps) {
     const MegaMenuListRef = useRef<MegaMenuList>(null);
     const [MegaMenuStructure, setMegaMenuStructure] =
         useState<MegaMenuStructure>(null);
+    const MegaMenuParametersL = useRef<MegaMenuParametersList>(null);
     const SPGroups = useRef<GroupsSP>(null);
     const [Ready, setReady] = useState(false);
+
     const [MyLinksEditMode, setMyLinksEditMode] = useState(false);
-
     const [MyLinks, setMyLinks] = useState<MyLinksItem[]>([]);
-
+    const [MegaMenuParameters, setMegaMenuParameters] =
+        useState<MegaMenuParametersItem[]>(null);
     const [Open, setOpen] = useState(false);
 
     const [Loading, setLoading] = useState(false);
@@ -66,14 +72,21 @@ export default function MegaMenu(props: MegaMenuProps) {
     const LoadData = async () => {
         try {
             setLoading(true);
-            let MyLinks = await MyLinksL.current.GetMyQueries();
-            let MegaMenuStructure = await MegaMenuListRef.current
+
+            const [BatchedWeb, Execute] = props.Web.batched();
+
+            let MyLinks = MyLinksL.current.GetMyQueries();
+            let MegaMenuStructure = MegaMenuListRef.current
                 .LoadMegaMenu()
                 .catch((Ex) => {
                     throw Ex;
                 });
-            setMegaMenuStructure(MegaMenuStructure);
-            setMyLinks(MyLinks);
+            let MegaMenuP = MegaMenuParametersL.current.GetAll();
+            await Execute();
+
+            setMegaMenuStructure(await MegaMenuStructure);
+            setMyLinks(await MyLinks);
+            setMegaMenuParameters(await MegaMenuP);
             setReady(true);
             setLoading(false);
         } catch (Ex) {
@@ -91,6 +104,10 @@ export default function MegaMenu(props: MegaMenuProps) {
                 props.Context
             );
             MyLinksL.current = new MyLinksList(props.Web, props.Context);
+            MegaMenuParametersL.current = new MegaMenuParametersList(
+                props.Web,
+                props.Context
+            );
 
             await SPGroups.current.IsLoaded;
             if (SPGroups.current.LoadingError != null)
@@ -290,6 +307,24 @@ export default function MegaMenu(props: MegaMenuProps) {
         );
     };
 
+    const Messages = MegaMenuParameters?.filter(
+        (MNP) => MNP.Key == "TickerMessage"
+    );
+    const TickerLabel = MegaMenuParameters?.filter(
+        (MNP) => MNP.Key == "TickerLabel"
+    )
+        .map((U) => U.Value)
+        .join("");
+
+    const TickerScrollVelocity = MegaMenuParameters?.filter(
+        (MNP) => MNP.Key == "TickerScrollVelocity"
+    );
+
+    const TickerScrollVelocityNumber =
+        TickerScrollVelocity != null && TickerScrollVelocity.length > 0
+            ? TickerScrollVelocity[0].NumberValue
+            : 0.12;
+
     return (
         <Stack
             horizontalAlign={"start"}
@@ -308,49 +343,77 @@ export default function MegaMenu(props: MegaMenuProps) {
             )}
 
             {Ready && MegaMenuStructure && (
-                <Stack
-                    styles={{ root: { width: "100%" } }}
-                    className={MegaMenuStyles.MegaMenuBar}
-                >
+                <>
                     <Stack
-                        horizontal
-                        horizontalAlign="start"
-                        verticalAlign="center"
+                        styles={{ root: { width: "100%" } }}
+                        className={MegaMenuStyles.MegaMenuBar}
                     >
-                        <IconButton
-                            iconProps={{
-                                iconName: Open ? "ChromeClose" : "CollapseMenu",
-                            }}
-                            onClick={() => {
-                                setOpen(!Open);
-                            }}
-                            className={MegaMenuStyles.MainIcon}
-                            styles={{ icon: { fontSize: 30 } }}
-                        ></IconButton>
-                        <div style={{ height: 50 }}>
-                            <a
-                                href={
-                                    props.Context.pageContext.legacyPageContext
-                                        .portalUrl
-                                }
-                            >
-                                <img style={{ height: "100%" }} src={Logo} />
-                            </a>
-                        </div>
-                    </Stack>
+                        <Stack
+                            horizontal
+                            horizontalAlign="start"
+                            verticalAlign="center"
+                        >
+                            <IconButton
+                                iconProps={{
+                                    iconName: Open
+                                        ? "ChromeClose"
+                                        : "CollapseMenu",
+                                }}
+                                onClick={() => {
+                                    setOpen(!Open);
+                                }}
+                                className={MegaMenuStyles.MainIcon}
+                                styles={{ icon: { fontSize: 30 } }}
+                            ></IconButton>
+                            <div style={{ height: 50 }}>
+                                <a
+                                    href={
+                                        props.Context.pageContext
+                                            .legacyPageContext.portalUrl
+                                    }
+                                >
+                                    <img
+                                        style={{ height: "100%" }}
+                                        src={Logo}
+                                    />
+                                </a>
+                            </div>
+                        </Stack>
 
-                    {Open && (
-                        <div className={MegaMenuStyles.Elements}>
-                            {MegaMenuStructure.MegaMenuNodes.filter(
-                                FilterNodeGroups
-                            )
-                                .sort((a, b) => {
-                                    return a.Position > b.Position ? 1 : -1;
-                                })
-                                .map((MNN) => _RenderMegaMenuNode(MNN))}
-                        </div>
+                        {Open && (
+                            <div className={MegaMenuStyles.Elements}>
+                                {MegaMenuStructure.MegaMenuNodes.filter(
+                                    FilterNodeGroups
+                                )
+                                    .sort((a, b) => {
+                                        return a.Position > b.Position ? 1 : -1;
+                                    })
+                                    .map((MNN) => _RenderMegaMenuNode(MNN))}
+                            </div>
+                        )}
+                    </Stack>
+                    {Messages.length > 0 && (
+                        <Stack
+                            horizontal
+                            horizontalAlign="start"
+                            verticalAlign="center"
+                            className={MegaMenuStyles.TickerBar}
+                            grow
+                            styles={{ root: { width: "100%" } }}
+                        >
+                            <div className={MegaMenuStyles.TickerBarHeader}>
+                                {TickerLabel}
+                            </div>
+                            <div style={{ width: "100%" }}>
+                                <Marquee velocity={TickerScrollVelocityNumber}>
+                                    {Messages.map((MNP) => MNP.Value).join(
+                                        " | "
+                                    )}
+                                </Marquee>
+                            </div>
+                        </Stack>
                     )}
-                </Stack>
+                </>
             )}
         </Stack>
     );

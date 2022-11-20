@@ -66,8 +66,8 @@ export default class MegaMenuList extends BaseList {
     /**
      * Loads the megamenu item structure
      */
-    public async LoadMegaMenu() {
-        var MegaMenuItems = await this.LoadMegaMenuItems();
+    public async LoadMegaMenu(BatchedWeb?: IWeb) {
+        var MegaMenuItems = await this.LoadMegaMenuItems(BatchedWeb);
 
         var MegaMenu: MegaMenuStructure = new MegaMenuStructure(MegaMenuItems);
         return MegaMenu;
