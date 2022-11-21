@@ -50,40 +50,50 @@ export default class GroupsSP {
      */
     private async GetGroups() {
         this.IsLoaded = new Promise(async (resolve, reject) => {
-            const [Batched, execute] = this.Web.batched();
-            let G = this.Graph.me
-                .memberOf()
-                .then((G2) => (this.CurrentGraphgroups = G2));
+            try {
+                const [Batched, execute] = this.Web.batched();
+                let G = this.Graph.me
+                    .memberOf()
+                    .then((G2) => (this.CurrentGraphgroups = G2));
 
-            let BatchedWeb = this.Web.using(Batched);
+                let BatchedWeb = this.Web.using(Batched);
 
-            let AllGroupsResult = BatchedWeb.siteGroups().then((G) => {
-                this.AllSiteGroups = G;
-            });
-            let CurrentUserGroupsResult = BatchedWeb.currentUser
-                .groups()
-                .then((G) => {
-                    this.CurrentUserGroups = G;
+                let AllGroupsResult = BatchedWeb.siteGroups().then((G) => {
+                    this.AllSiteGroups = G;
+                });
+                let CurrentUserGroupsResult = BatchedWeb.currentUser
+                    .groups()
+                    .then((G) => {
+                        this.CurrentUserGroups = G;
+                    });
+
+                let CurrentLoggedUserResult = BatchedWeb.currentUser().then(
+                    (U) => (this.CurrentLoggedUserId = U.Id)
+                );
+                try {
+                    await execute();
+                } catch (E) {
+                    throw E;
+                }
+
+                await Promise.all([
+                    AllGroupsResult,
+                    CurrentUserGroupsResult,
+                    CurrentLoggedUserResult,
+                    G,
+                ]).catch((E) => {
+                    throw E;
                 });
 
-            let CurrentLoggedUserResult = BatchedWeb.currentUser().then(
-                (U) => (this.CurrentLoggedUserId = U.Id)
-            );
+                this.MapGroups();
 
-            await execute();
-
-            await Promise.all([
-                AllGroupsResult,
-                CurrentUserGroupsResult,
-                G,
-            ]).catch((E) => {
-                this.LoadingError = E;
+                resolve(true);
+            } catch (ex) {
+                this.LoadingError = new Error(
+                    `Error while trying to obtain the users group information: ${ex.message}`
+                );
                 resolve(false);
-            });
-
-            this.MapGroups();
-
-            resolve(true);
+            }
         });
     }
 

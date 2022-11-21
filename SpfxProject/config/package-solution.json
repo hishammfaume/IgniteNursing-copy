@@ -3,7 +3,7 @@
     "solution": {
         "name": "Ignite_Nursing_MegaMenu",
         "id": "80ea3b5a-216f-4338-acab-d55755930135",
-        "version": "1.0.0.9",
+        "version": "1.0.0.10",
         "includeClientSideAssets": true,
         "skipFeatureDeployment": true,
         "webApiPermissionRequests": [

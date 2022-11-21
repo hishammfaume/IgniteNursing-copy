@@ -30,6 +30,7 @@ import { IWeb } from "@pnp/sp/webs";
 import MegaMenuParametersList from "../../../MegaMenuParameters/MegaMenuParametersList";
 import { MegaMenuParametersItem } from "../../../MegaMenuParameters/MegaMenuParametersItem";
 import Marquee from "react-smooth-marquee";
+import ErrorBoundary from "../../../../../Components/Basics/ErrorBound/ErrorBound";
 const Logo = require("../../../../../Logo/INLogo.png");
 
 export interface MegaMenuProps {
@@ -185,7 +186,17 @@ export default function MegaMenu(props: MegaMenuProps) {
                 }).map((N) => {
                     return N.Item.Link != "" ? (
                         <div className={MegaMenuStyles.LinkText}>
-                            <a href={N.Item.Link}>{N.Title}</a>
+                            <a
+                                href={N.Item.Link}
+                                onClick={() => {
+                                    setOpen(false);
+                                }}
+                                onAuxClick={() => {
+                                    setOpen(false);
+                                }}
+                            >
+                                {N.Title}
+                            </a>
                         </div>
                     ) : (
                         <div className={MegaMenuStyles.LinkText}>{N.Title}</div>
@@ -202,7 +213,17 @@ export default function MegaMenu(props: MegaMenuProps) {
                             >
                                 {L.Link != "" ? (
                                     <div className={MegaMenuStyles.LinkText}>
-                                        <a href={L.Link}>{L.Title}</a>
+                                        <a
+                                            href={L.Link}
+                                            onClick={() => {
+                                                setOpen(false);
+                                            }}
+                                            onAuxClick={() => {
+                                                setOpen(false);
+                                            }}
+                                        >
+                                            {L.Title}
+                                        </a>
                                     </div>
                                 ) : (
                                     <div className={MegaMenuStyles.LinkText}>
@@ -326,95 +347,111 @@ export default function MegaMenu(props: MegaMenuProps) {
             : 0.12;
 
     return (
-        <Stack
-            horizontalAlign={"start"}
-            verticalAlign={"center"}
-            gap={5}
-            grow
-            styles={{ root: { width: "100%" } }}
-        >
-            {Errors?.length > 0 && (
-                <ShowErrors
-                    Errors={Errors}
-                    OnChange={(NewErrors) => {
-                        setErrors(NewErrors);
-                    }}
-                ></ShowErrors>
-            )}
+        <ErrorBoundary ComponentName="MegaMenu">
+            <Stack
+                horizontalAlign={"start"}
+                verticalAlign={"center"}
+                gap={5}
+                grow
+                styles={{ root: { width: "100%" } }}
+            >
+                {Errors?.length > 0 && (
+                    <ShowErrors
+                        Errors={Errors}
+                        OnChange={(NewErrors) => {
+                            setErrors(NewErrors);
+                        }}
+                    ></ShowErrors>
+                )}
 
-            {Ready && MegaMenuStructure && (
-                <>
-                    <Stack
-                        styles={{ root: { width: "100%" } }}
-                        className={MegaMenuStyles.MegaMenuBar}
-                    >
+                {Ready && MegaMenuStructure && (
+                    <>
                         <Stack
-                            horizontal
-                            horizontalAlign="start"
-                            verticalAlign="center"
-                        >
-                            <IconButton
-                                iconProps={{
-                                    iconName: Open
-                                        ? "ChromeClose"
-                                        : "CollapseMenu",
-                                }}
-                                onClick={() => {
-                                    setOpen(!Open);
-                                }}
-                                className={MegaMenuStyles.MainIcon}
-                                styles={{ icon: { fontSize: 30 } }}
-                            ></IconButton>
-                            <div style={{ height: 50 }}>
-                                <a
-                                    href={
-                                        props.Context.pageContext
-                                            .legacyPageContext.portalUrl
-                                    }
-                                >
-                                    <img
-                                        style={{ height: "100%" }}
-                                        src={Logo}
-                                    />
-                                </a>
-                            </div>
-                        </Stack>
-
-                        {Open && (
-                            <div className={MegaMenuStyles.Elements}>
-                                {MegaMenuStructure.MegaMenuNodes.filter(
-                                    FilterNodeGroups
-                                )
-                                    .sort((a, b) => {
-                                        return a.Position > b.Position ? 1 : -1;
-                                    })
-                                    .map((MNN) => _RenderMegaMenuNode(MNN))}
-                            </div>
-                        )}
-                    </Stack>
-                    {Messages.length > 0 && (
-                        <Stack
-                            horizontal
-                            horizontalAlign="start"
-                            verticalAlign="center"
-                            className={MegaMenuStyles.TickerBar}
-                            grow
                             styles={{ root: { width: "100%" } }}
+                            className={MegaMenuStyles.MegaMenuBar}
                         >
-                            <div className={MegaMenuStyles.TickerBarHeader}>
-                                {TickerLabel}
-                            </div>
-                            <div style={{ width: "100%" }}>
-                                <Marquee velocity={TickerScrollVelocityNumber}>
-                                    {Messages.map((MNP) => MNP.Value).join(
-                                        " | "
-                                    )}
-                                </Marquee>
-                            </div>
+                            <Stack
+                                horizontal
+                                horizontalAlign="start"
+                                verticalAlign="center"
+                            >
+                                <IconButton
+                                    iconProps={{
+                                        iconName: Open
+                                            ? "ChromeClose"
+                                            : "CollapseMenu",
+                                    }}
+                                    onClick={() => {
+                                        setOpen(!Open);
+                                    }}
+                                    className={MegaMenuStyles.MainIcon}
+                                    styles={{ icon: { fontSize: 30 } }}
+                                ></IconButton>
+                                <div style={{ height: 50 }}>
+                                    <a
+                                        href={
+                                            props.Context.pageContext
+                                                .legacyPageContext.portalUrl
+                                        }
+                                        onClick={() => {
+                                            setOpen(false);
+                                        }}
+                                        onAuxClick={() => {
+                                            setOpen(false);
+                                        }}
+                                    >
+                                        <img
+                                            style={{ height: "100%" }}
+                                            src={Logo}
+                                        />
+                                    </a>
+                                </div>
+                            </Stack>
+
+                            {Open && (
+                                <div className={MegaMenuStyles.Elements}>
+                                    {MegaMenuStructure.MegaMenuNodes.filter(
+                                        FilterNodeGroups
+                                    )
+                                        .sort((a, b) => {
+                                            return a.Position > b.Position
+                                                ? 1
+                                                : -1;
+                                        })
+                                        .map((MNN) => _RenderMegaMenuNode(MNN))}
+                                </div>
+                            )}
                         </Stack>
-                    )}
-                </>
-            )}
-        </Stack>
+                        {Messages.length > 0 && (
+                            <Stack
+                                horizontal
+                                horizontalAlign="start"
+                                verticalAlign="center"
+                                className={MegaMenuStyles.TickerBar}
+                                grow
+                                styles={{ root: { width: "100%" } }}
+                            >
+                                <div className={MegaMenuStyles.TickerBarHeader}>
+                                    {TickerLabel}
+                                </div>
+                                <div style={{ width: "100%" }}>
+                                    <Marquee
+                                        velocity={TickerScrollVelocityNumber}
+                                    >
+                                        {Messages.sort((a, b) =>
+                                            a.NumberValue > b.NumberValue
+                                                ? 1
+                                                : -1
+                                        )
+                                            .map((MNP) => MNP.Value)
+                                            .join(" | ")}
+                                    </Marquee>
+                                </div>
+                            </Stack>
+                        )}
+                    </>
+                )}
+            </Stack>
+        </ErrorBoundary>
     );
 }
