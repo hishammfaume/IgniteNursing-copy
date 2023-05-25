@@ -64,6 +64,10 @@ export default function MegaMenu(props: MegaMenuProps) {
 
     const [Loading, setLoading] = useState(false);
 
+    const [ExpandedElements, setExpandedElements] = useState<{
+        [Key: string]: any;
+    }>({});
+
     useEffect(() => {
         initialLoad().catch((Ex) => {
             setErrors([...Errors, Ex.message]);
@@ -159,18 +163,117 @@ export default function MegaMenu(props: MegaMenuProps) {
         else return 1;
     };
 
+    const GetNodes = (MN: MegaMenuNode): MegaMenuNode[] => {
+        return MN.SubNodes && MN.SubNodes.length > 0
+            ? MN.SubNodes.filter(FilterNodeGroups)
+                  .sort(SortNodeGroups)
+                  .map((N) => N)
+            : [];
+    };
+
+    const ExpandNode = (ID: number) => {
+        if (ExpandedElements[ID] == null) {
+            let Nodes = { ...ExpandedElements };
+            Nodes[ID] = true;
+            setExpandedElements(Nodes);
+        }
+    };
+    const RetractNode = (ID: number) => {
+        if (ExpandedElements[ID] != null) {
+            let Nodes = { ...ExpandedElements };
+            delete Nodes[ID];
+            setExpandedElements(Nodes);
+        }
+    };
+
+    const RenderSubNode = (N: MegaMenuNode, Depth: number) => {
+        let Padding = Depth > 1 ? Depth * 15 : 0;
+
+        let SubNodes = GetNodes(N);
+
+        return N.Item.Link != "" ? (
+            <>
+                <div
+                    className={MegaMenuStyles.LinkText}
+                    style={{ paddingLeft: Padding }}
+                >
+                    <a
+                        href={N.Item.Link}
+                        onClick={() => {
+                            setOpen(false);
+                        }}
+                        onAuxClick={() => {
+                            setOpen(false);
+                        }}
+                    >
+                        {N.Title}
+                    </a>
+                    {SubNodes.length > 0 && (
+                        <IconButton
+                            iconProps={{
+                                iconName:
+                                    ExpandedElements[N.Item.ID] != null
+                                        ? "ChevronLeft"
+                                        : "ChevronRight",
+                            }}
+                            onClick={() => {
+                                if (ExpandedElements[N.Item.ID] == null) {
+                                    ExpandNode(N.Item.ID);
+                                } else {
+                                    RetractNode(N.Item.ID);
+                                }
+                            }}
+                        ></IconButton>
+                    )}
+                </div>
+                {ExpandedElements[N.Item.ID] != null &&
+                    SubNodes?.map((N) => {
+                        return RenderSubNode(N, Depth + 1);
+                    })}
+            </>
+        ) : (
+            <>
+                <div
+                    className={MegaMenuStyles.LinkText}
+                    style={{ paddingLeft: Padding }}
+                >
+                    {N.Title}
+                    {SubNodes.length > 0 && (
+                        <IconButton
+                            iconProps={{
+                                iconName:
+                                    ExpandedElements[N.Item.ID] != null
+                                        ? "ChevronLeft"
+                                        : "ChevronRight",
+                            }}
+                            onClick={() => {
+                                if (ExpandedElements[N.Item.ID] == null) {
+                                    ExpandNode(N.Item.ID);
+                                } else {
+                                    RetractNode(N.Item.ID);
+                                }
+                            }}
+                        ></IconButton>
+                    )}
+                </div>
+
+                {ExpandedElements[N.Item.ID] != null &&
+                    SubNodes?.map((N) => {
+                        return RenderSubNode(N, Depth + 1);
+                    })}
+            </>
+        );
+    };
+
     /**
      * Renders MegaMenuNode and all its children
      * @param MN
      * @returns
      */
     const _RenderMegaMenuNode = (MN: MegaMenuNode): JSX.Element => {
-        let SubNodes =
-            MN.SubNodes && MN.SubNodes.length > 0
-                ? MN.SubNodes.filter(FilterNodeGroups)
-                      .sort(SortNodeGroups)
-                      .map((N) => N)
-                : [];
+        let SubNodes = GetNodes(MN);
+
+        let Depth = 1;
 
         let MyLinksSorted = MyLinks.sort((a, b) => {
             let SortValueA: number = a.LinkOrder != -1 ? a.LinkOrder : a.ID;
@@ -181,26 +284,8 @@ export default function MegaMenu(props: MegaMenuProps) {
         return (
             <div className={MegaMenuStyles.Column}>
                 <div className={MegaMenuStyles.HeaderText}>{MN.Item.Title}</div>
-                {SubNodes?.sort((a, b) => {
-                    return a.Position > b.Position ? 1 : -1;
-                }).map((N) => {
-                    return N.Item.Link != "" ? (
-                        <div className={MegaMenuStyles.LinkText}>
-                            <a
-                                href={N.Item.Link}
-                                onClick={() => {
-                                    setOpen(false);
-                                }}
-                                onAuxClick={() => {
-                                    setOpen(false);
-                                }}
-                            >
-                                {N.Title}
-                            </a>
-                        </div>
-                    ) : (
-                        <div className={MegaMenuStyles.LinkText}>{N.Title}</div>
-                    );
+                {SubNodes?.map((N) => {
+                    return RenderSubNode(N, Depth);
                 })}
                 {IsMyLinks &&
                     MyLinksSorted.map((L, idx) => {
