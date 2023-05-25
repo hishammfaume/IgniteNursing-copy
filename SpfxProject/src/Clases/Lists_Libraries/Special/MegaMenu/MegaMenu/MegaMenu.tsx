@@ -213,8 +213,12 @@ export default function MegaMenu(props: MegaMenuProps) {
                             iconProps={{
                                 iconName:
                                     ExpandedElements[N.Item.ID] != null
-                                        ? "ChevronLeft"
-                                        : "ChevronRight",
+                                        ? "ChevronLeftSmall"
+                                        : "ChevronRightSmall",
+                                color: "#f68633;",
+                            }}
+                            styles={{
+                                icon: { color: "#f68633" },
                             }}
                             onClick={() => {
                                 if (ExpandedElements[N.Item.ID] == null) {
@@ -243,8 +247,12 @@ export default function MegaMenu(props: MegaMenuProps) {
                             iconProps={{
                                 iconName:
                                     ExpandedElements[N.Item.ID] != null
-                                        ? "ChevronLeft"
-                                        : "ChevronRight",
+                                        ? "ChevronLeftSmall"
+                                        : "ChevronRightSmall",
+                                color: "#f68633;",
+                            }}
+                            styles={{
+                                icon: { color: "#f68633" },
                             }}
                             onClick={() => {
                                 if (ExpandedElements[N.Item.ID] == null) {
