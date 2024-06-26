@@ -4,7 +4,7 @@
   "https": true,
   "serveConfigurations": {
     "default": {
-      "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
+      "pageUrl": "https://ignitenursing.sharepoint.com/sites/SupportedLivingHome",
       "customActions": {
         "984db7df-8567-4839-8511-64fb85f2c9d4": {
           "location": "ClientSideExtension.ApplicationCustomizer",
@@ -15,7 +15,7 @@
       }
     },
     "megaMenu": {
-      "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
+      "pageUrl": "https://ignitenursing.sharepoint.com/sites/SupportedLivingHome",
       "customActions": {
         "984db7df-8567-4839-8511-64fb85f2c9d4": {
           "location": "ClientSideExtension.ApplicationCustomizer",
